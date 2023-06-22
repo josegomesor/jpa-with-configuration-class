@@ -23,21 +23,19 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Profile("dev")
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.josky.jpawithconfigurationclass")
-@PropertySource(value = { "classpath:database-dev.properties" })
-public class JpaConfigDev {
+@PropertySource(value = { "classpath:database-${spring.profiles.active}.properties" })
+public class JpaConfigDataSource {
 
-	private static final Logger LOG = LoggerFactory.getLogger(JpaConfigDev.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JpaConfigDataSource.class);
 	@Autowired
 	private Environment env;
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
-		LOG.info("-----------Start profile DEV-----------");
+		LOG.info("-----------Start profile " + env.getProperty("spring.profiles.active") + " -----------");
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setDatabase(Database.MYSQL);
 		vendorAdapter.setGenerateDdl(true);
@@ -82,9 +80,10 @@ public class JpaConfigDev {
 		properties.setProperty("hibernate.jdbc.lob.non_contextual_creation", env.getProperty("spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation"));
 		properties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
 		properties.setProperty("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"));		
-		properties.setProperty("spring.cloud.gcp.sql.enabled", env.getProperty("spring.cloud.gcp.sql.enabled"));
-		properties.setProperty("spring.cloud.gcp.config.enabled", env.getProperty("spring.cloud.gcp.config.enabled"));		
-				
+//		properties.setProperty("spring.cloud.gcp.sql.enabled", env.getProperty("spring.cloud.gcp.sql.enabled"));
+//		properties.setProperty("spring.cloud.gcp.config.enabled", env.getProperty("spring.cloud.gcp.config.enabled"));		
+//		properties.setProperty("spring.cloud.gcp.sql.database-name", env.getProperty("spring.cloud.gcp.sql.database-name"));
+//		properties.setProperty("spring.cloud.gcp.sql.instance-connection-name", env.getProperty("spring.cloud.gcp.sql.instance-connection-name"));	
 		return properties;
 	}
 }

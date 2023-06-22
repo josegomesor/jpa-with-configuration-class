@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.josky</groupId>
 	<artifactId>jpa-with-configuration-class</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>jpa-with-configuration-class</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
